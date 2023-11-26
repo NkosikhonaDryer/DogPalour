@@ -1,0 +1,136 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <p>
+        <br />
+        <br />
+        <br />
+    </p>
+</div>
+<!--New style login type-->
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+          
+        }
+
+        form {
+            border: 3px solid #ffd800;
+            background-color: black;
+            opacity: 0.8;
+        }
+
+        input[type=text], input[type=password], input[type=email] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            /*display: inline-block;*/
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        input[type=text], input[type=email] {
+            position: relative;
+            left: 7.5rem
+        }
+
+        input[type=text], input[type=password] {
+            position: relative;
+            left: 4.5rem
+        }
+
+        button {
+            background-color: #04AA6D;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 35%;
+        }
+
+            button:hover {
+                opacity: 0.9;
+                position: relative;
+                left: 10rem
+            }
+
+        .cancelbtn {
+            width: 50%;
+            color: white;
+            padding: 10px 18px;
+            background-color: black;
+        }
+
+        .imgcontainer {
+            text-align: center;
+            margin: 24px 0 12px 0;
+        }
+
+        img.avatar {
+            width: 40%;
+            border-radius: 50%;
+        }
+
+        .container {
+            padding: 16px;
+        }
+
+        span.psw {
+            float: right;
+            padding-top: 16px;
+        }
+    </style>
+</head>
+<body>
+   
+    <div style="width:50%;margin-left:25%;margin-right:25%;margin-top:-10px;">
+
+        <form action="/Home/Login" method="post" style="color:azure">
+            <p>
+                <h2> <b>Login</b></h2>
+                @if (TempData["LoginError"] != null)
+                {
+                    <div class="alert alert-danger">
+                        @TempData["LoginError"]
+                    </div>
+                }
+
+
+
+                <div class="container">
+
+                    <label for="uname"><b>Email</b></label>
+                    <input type="email" style="border: 5px solid white;color:black" placeholder="Enter Email" name="Email" required><br />
+
+
+                    <label for="psw"><b>Password</b></label>
+                    <input style="border: 5px solid white;color:black" type="password" placeholder="Enter Password" name="Password" required><br />
+
+
+                    <button style="position: relative; left: 11.5rem; width: 280px; border: 2px solid white;" type="submit">Login</button>
+                    <br />
+
+                </div>
+
+                <div class="container" style="background-color:#f1f1f1;width:558px;height:60px">
+                    <p>
+                        <a href="@Url.Action("Create","Customers")"style="font-size:13px;text-decoration:none" class="cancelbtn"><b>Register</b></a>
+                        <label class="text-danger" style="font-size:16px;position:relative;left:3rem;bottom:0rem">@ViewBag.ErroMsg</label>
+                    </p>
+                </div>
+            </p>
+
+        </form>
+
+    </div>
+
+
+</body>
+</html>

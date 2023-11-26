@@ -1,0 +1,599 @@
+﻿@model DogPalour.Models.Employee
+
+@{
+    ViewBag.Title = Model.FirstName;
+    Layout = "~/Views/Shared/View.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+<style>
+    div#Info {
+        width: 600px;
+        height: 500px;
+    }
+
+    div#Info {
+        width: 450px;
+        height: 500px;
+    }
+
+    img#item:hover {
+        -moz-transform: scale(1.9);
+        -webkit-transform: scale(1.9);
+        transform: scale(3);
+        border-radius: unset;
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        display: block;
+        color: #00ffff
+    }
+
+    div#Theitem:hover {
+        color: #ff0000
+    }
+
+    img#imgId:hover {
+        cursor: pointer;
+        background-color: azure;
+        opacity: 0.8;
+    }
+    div#jobsHolder {
+        position: absolute;
+        left: 42.5rem;
+        border: solid 2px #000000;
+        width: 762px;
+        height: 425px;
+        background-color: azure;
+        overflow: hidden;
+        opacity: 1
+    }
+
+    div#jobsHolderCompleted {
+        position: absolute;
+        left: 42.5rem;
+        border: solid 2px #000000;
+        width: 762px;
+        height: 425px;
+        background-color: azure;
+        overflow: hidden;
+        opacity: 1
+    }
+</style>
+<div>
+    <p>
+        <br />
+    </p>
+</div>
+@if (TempData["StaffSuccess"] != null)
+{
+    <div class="text-center text-success" style="position:absolute;left:45rem;top:6rem">
+        <p><h3><b>@TempData["StaffSuccess"].ToString()</b></h3></p>
+    </div>
+
+}
+
+<div style=" position:relative;left:4.5rem">
+    <p>
+       <br/>
+    </p>
+</div>
+
+
+
+<div id="WholeThing" class="container-fluid p-4 shadow mx-auto" style="max-width: 1050px;width:1050px;height:460px; border: 1px solid; padding: 10px; box-shadow: 5px 10px #888888; ">
+
+    <div class="row">
+        <div class="col-sm-4 col-md-3" style="border:solid 1px #000000;position:relative;left:1rem;height:auto">
+            <p>
+                <div>
+                    <img id="imgId" src="@Url.Content(Model.ProfileImage)" style="width:240px;height:250px;border:solid 1px black;position:relative;left:-0.4rem" />
+                    <div class="text-center" style="display:flex;flex-direction:row;width:240px">
+                        <label style="font-size:3rem;"><b>@Model.FirstName @Model.Surname</b></label>
+                    </div>
+                </div>
+
+            </p>
+        </div>
+
+        <div id="InfoHolder" class="col-sm-8 col-md-9 bg-light p-2" style="opacity:1;overflow:hidden">
+            <table class="table table-hover table-striped table-bordered">
+                <tr><th>First Name:</th><td>@Model.FirstName  <button id="jobs" style="position:absolute;right:1.8rem;top:0.2rem;width:250px" class="btn btn-default btn-primary">Jobs</button></td></tr>
+                <tr><th>Last Name:</th><td>@Model.Surname</td></tr>
+                <tr><th>Gender:</th><td> @Model.Gender</td></tr>
+                <tr><th>Email:</th><td>@Model.EmailAddres</td></tr>
+                <tr><th>Phone number:</th><td>@Model.PhoneNumber</td></tr>
+
+                <tr><th>Status</th><td>@Model.EmpStatus</td></tr>
+                <tr><th>Date last updated:</th><td>@Model.DateCreated</td></tr>
+            </table>
+        </div>
+        <div id="jobsHolder" class="col-sm-8 col-md-9 bg-light p-2">
+            <div style="position:relative;top:1.5rem">
+                <button id="ToBooking" class="btn btn-default btn-primary">
+                    Completed Tasks
+                </button>
+            </div>
+            <hr />
+            <div style="border:solid 1px; height:340px;width:730px;overflow:hidden;overflow:scroll;overflow-x:hidden;overflow-y:scroll;overflow-y:auto">
+                <div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Dog Name
+                                </th>
+                                <th>
+                                    Service Needed
+                                </th>
+                                <th>
+                                    Booking Date
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.Tasks)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.DogName
+                                    </td>
+                                    <td>
+                                        @item.SeviceNeeded
+                                    </td>
+                                    <td>
+                                        @item.BookingDate
+                                    </td>
+                                    <td>
+                                        @item.CompleteState
+                                    </td>
+                                    <td>
+                                        <button data-toggle="modal" data-target=".@item.DogServiceId" class="btn btn-default btn-primary" style="position:relative">
+                                            Completed?
+                                        </button>
+                                        <div class="modal fade @item.DogServiceId">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content" style="width:58%;">
+                                                    <div class="modal-header">
+                                                        <button data-dismiss="modal" class="close"><span>&times;</span></button>
+                                                        <div class="modal-title"><b>Are you sure the task is completed? Action not reversable</b></div>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div style="display:flex;justify-content:center;align-content:center">
+                                                            <a id="Li" style=" border: none; padding: 1rem 4rem; font-size: 2rem; cursor: pointer; background: #87CEEB;"
+                                                                    href="@Url.Action("FinishTask","Employees",new { dogServId =item.DogServiceId})" class="btn-default btn btn-primary">
+                                                                Yes
+                                                            </a>
+                                                            
+                                                            <button data-dismiss="modal" style=" border: none; padding: 1rem 4rem; font-size: 2rem; cursor: pointer;background-color:#ff0000 "
+                                                              class=" btn-default btn btn-danger">No</button><br /><br />
+
+                                                        </div>
+                                                       
+                                                    </div>
+                                                    <div class="modal-footer">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="jobsHolderCompleted" class="col-sm-8 col-md-9 bg-light p-2">
+            <div style="position:relative;top:1.5rem">
+                <button id="ToPendingBooking" class="btn btn-default btn-primary">
+                    Pending Tasks
+                </button>
+            </div>
+            <hr />
+            <div style="border: solid 1px; height: 340px; width: 730px; overflow: hidden; overflow: scroll; overflow-x: hidden; overflow-y: scroll; overflow-y: auto">
+                <div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Dog Name
+                                </th>
+                                <th>
+                                    Service Needed
+                                </th>
+                                <th>
+                                    Booking Date
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.TasksComplete)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.DogName
+                                    </td>
+                                    <td>
+                                        @item.SeviceNeeded
+                                    </td>
+                                    <td>
+                                        @item.BookingDate
+                                    </td>
+                                    <td>
+                                        @item.CompleteState
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--below is the skill and the services of DogPalour-->
+        <div id="SkillsHolder" class="col-sm-8 col-md-9 bg-light p-2 container"
+             style="position:absolute;left:42.5rem;border:solid 1px #000000;width:762px;height:425px;display:block;background-color:azure;opacity:0;overflow:hidden">
+            <!--Below is the skills that the staff member can offer-->
+            <div id="" style="height:210px;width:740px;border:solid 1px black;position:absolute;left:1rem;top:1rem">
+                <div class="text-center" style="height:30px;display:flex;align-content:center;justify-content:center">
+
+                    <h3 style="position:relative;top:-2rem"><b>Skills offered by member</b></h3>
+
+
+                </div>
+                <div style="height: 175px; width: 730px; border: solid 1px black; position: relative; left: 0.4rem; overflow: hidden; overflow: scroll; overflow-x: scroll; overflow-x: auto; overflow-y: hidden;">
+                    <div class="row" style="height:auto;width:auto;position:relative;top:0.5rem;left:2rem">
+                        @foreach (var item in ViewBag.skills)
+                        {
+                            <div id="Theitem" style="height:150px;width:140px;border:solid 1px #000000;" class="col-md-2">
+
+                                <div style="position: relative; top: 1rem">
+                                    <img id="item" src="@Url.Content(item.MarketImage)" style="width:120px;height:100px;position:relative;left:-0.5rem;" />
+                                </div>
+                                <div style="position:relative;bottom:-1rem">
+                                    <label>@item.JobOffer</label>
+                                </div>
+
+
+
+                            </div>
+                            <div style="height:150px;width:5px;" class="col-md-2"></div>
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!--Below is the Edit Employee Form-->
+        <div id="EditEmployee" class="col-sm-8 col-md-9 bg-light p-2" style="position: absolute; width: 795px;left:41rem;overflow:hidden;opacity:0">
+            @using (Html.BeginForm("Edit", "Employees", FormMethod.Post, new { Enctype = "multipart/form-data" }))
+            {@Html.AntiForgeryToken()
+            <input type="file" name="ProfileImage" id="AlbumCoverReal" hidden="hidden" style="width:0.01px; height:0.01px; opacity:0;" />
+            <input type="hidden" name="EmpEmail" value="@Model.EmailAddres" />
+            <div style="overflow: hidden; overflow: scroll; overflow-x: hidden; overflow-y: auto;overflow-y:scroll;height:412px">
+                <table class="table table-hover table-striped table-bordered">
+                    <tr><th>Id Number:</th><td> <input type="text" name="IdNumber" placeholder="@Model.IdNumber" style="width:500px;height:40px;border-radius:12rem" /></td></tr>
+                    <tr><th>First Name:</th><td> <input type="text" name="FirstName" placeholder="@Model.FirstName" style="width:500px;height:40px;border-radius:12rem" /></td></tr>
+                    <tr><th>Last Name:</th><td><input type="text" name="Surname" placeholder="@Model.Surname" style="width:500px;height:40px;border-radius:12rem" /></td></tr>
+                    <tr><th>Gender:</th><td><input type="text" name="Gender" placeholder="@Model.Gender" style="width:500px;height:40px;border-radius:12rem" /></td></tr>
+                    <tr><th>Email:</th><td><input type="text" name="EmailAddres" placeholder="@Model.EmailAddres" style="width:500px;height:40px;border-radius:12rem" /></td></tr>
+                    <tr><th>Phone number:</th><td><input type="text" name="PhoneNumber" placeholder="@Model.PhoneNumber" style="width:500px;height:40px;border-radius:12rem" /></td></tr>
+                    <tr><th>Address:</th><td><input type="text" name="Address" placeholder="@Model.Address" style="width:500px;height:40px;border-radius:12rem" /></td></tr>
+                    <!--Deal with-->
+                    <tr><th>Current Password:</th><td><input type="password" name="Password" placeholder="   Current password" style="width:500px;height:40px;border-radius:12rem" /></td></tr>
+                    <tr><th>New Password:</th><td><input type="password" name="NewPassword" placeholder="New Password" style="width:500px;height:40px;border-radius:12rem" /></td></tr>
+                    <tr><th>Confirm Password:</th><td><input type="password" name="ConfirmPassword" placeholder="Confirm Password" style="width:500px;height:40px;border-radius:12rem" /></td></tr>
+
+                </table>
+            </div>
+
+
+
+            <button type="submit" class="btn btn-default btn-primary" style="width: 770px;position:relative;bottom:1rem">
+                SAVE CHANGES
+            </button>
+
+        }
+
+        </div>
+
+    </div>
+
+
+
+</div>
+<div class="container-fluid" style="position:absolute;bottom:1rem;left:14rem">
+    <ul class="nav nav-tabs">
+        <li class="nav-item" style="box-shadow: 2px 2px #888888">
+            <a style="cursor:pointer;" id="BasicInfo" class="nav-link active" aria-current="page">Me</a>
+        </li>
+        <li class="nav-item" style="box-shadow: 2px 2px #888888">
+            <a style="cursor:pointer" id="Skills" class="nav-link">Skills</a>
+        </li>
+        <li id="Eholder" class="nav-item" style="box-shadow: 2px 2px #888888">
+            <a style="cursor:pointer" id="Edit" class="nav-link">Edit</a>
+        </li>
+      
+    </ul>
+
+    <nav class="navbar navbar-light bg-light">
+        <form class="container-fluid">
+            <div class="input-group">
+
+            </div>
+        </form>
+    </nav>
+</div>
+
+<input type="hidden" id="NumInput" value="@ViewBag.Num" />
+<script type="text/javascript">
+    const SkillBtn = document.getElementById("Skills");
+    const BasicInfo = document.getElementById("BasicInfo");
+    const Edit = document.getElementById("Edit");
+    const imgId = document.getElementById("imgId")
+    const FileUploed = document.getElementById("AlbumCoverReal");
+    const jobs = document.getElementById("jobs");
+    const ToBooking = document.getElementById("ToBooking");
+    const ToPendingBooking = document.getElementById("ToPendingBooking");
+
+    const Eholder = document.getElementById("Eholder");
+    const EditEmployee = document.getElementById("EditEmployee");
+    const SkillsHolder = document.getElementById("SkillsHolder");
+    const BasicInfoHolder = document.getElementById("InfoHolder");
+    const WholeThing = document.getElementById("WholeThing");
+    const jobsHolder = document.getElementById("jobsHolder");
+    const jobsHolderCompleted = document.getElementById("jobsHolderCompleted");
+    var int = document.getElementById("NumInput").value;;
+
+    window.addEventListener("load", function () {
+
+
+        if (int == 1) {
+            BasicInfo.click();
+        }
+        else if (int == 2) {
+            SkillBtn.click();
+        }
+        else if (int == 3) {
+            Edit.click();
+        }
+        else if (int = 4) {
+            jobs.click();
+        }
+
+
+    });
+    Eholder.addEventListener("click", function () {
+        Edit.click();
+    })
+    ToPendingBooking.addEventListener("click", function () {
+        jobs.click();
+    })
+    SkillBtn.addEventListener("click", function () {
+        int = 2;
+        //the Whole Thing
+        WholeThing.style.backgroundColor = "azure";
+        //button(skills) #888888
+        SkillBtn.style.backgroundColor = "#888888";
+        SkillBtn.style.color = "azure";
+        //button(Info)
+        BasicInfo.style.backgroundColor = "";
+        BasicInfo.style.color = "";
+        //Skills holder
+        SkillsHolder.style.height = "425px";
+        SkillsHolder.style.width = "762px";
+        SkillsHolder.style.opacity = "1";
+        //Info holder
+
+        BasicInfoHolder.style.opacity = "0";
+        //EditEmployee
+        EditEmployee.style.opacity = "0";
+        EditEmployee.style.height = "0.001px";
+        EditEmployee.style.width = "0.001px";
+        //button edit
+        Edit.style.backgroundColor = "";
+        Edit.style.color = "";
+        //imgId
+        //jobsHolder
+        jobsHolder.style.height = "0.01px";
+        jobsHolder.style.width = "0.01";
+        jobsHolder.style.opacity = "0";
+        //jobsHolderCompleted
+        jobsHolderCompleted.style.height = "0.01px";
+        jobsHolderCompleted.style.width = "0.01px";
+        jobsHolderCompleted.style.opacity = "0";
+    });
+    BasicInfo.addEventListener("click", function () {
+        int = 1;
+        //the Whole Thing
+        WholeThing.style.backgroundColor = "";
+        //button(Info)
+        BasicInfo.style.backgroundColor = "#888888";
+        BasicInfo.style.color = "azure";
+        //button(skills) #888888
+        SkillBtn.style.backgroundColor = "";
+        SkillBtn.style.color = "";
+        //Info Skills
+        SkillsHolder.style.height = "0.001px";
+        SkillsHolder.style.width = "0.001px";
+        SkillsHolder.style.opacity = "0";
+        //Info holder
+
+        BasicInfoHolder.style.opacity = "1";
+        //EditEmployee
+        EditEmployee.style.opacity = "0";
+        EditEmployee.style.height = "0.01px";
+        EditEmployee.style.width = "0.01px";
+        //button edit
+
+        Edit.style.backgroundColor = "";
+        Edit.style.color = "";
+        //imgId
+        //jobsHolder
+        jobsHolder.style.height = "0.01px";
+        jobsHolder.style.width = "0.01";
+        jobsHolder.style.opacity = "0";
+        //jobsHolderCompleted
+        jobsHolderCompleted.style.height = "0.01px";
+        jobsHolderCompleted.style.width = "0.01px";
+        jobsHolderCompleted.style.opacity = "0";
+
+
+
+    });
+    Edit.addEventListener("click", function () {
+        int = 3;
+        Edit.style.backgroundColor = "#888888";
+        Edit.style.color = "azure";
+        //Info Skills
+        SkillsHolder.style.height = "0.001px";
+        SkillsHolder.style.width = "0.001px";
+        SkillsHolder.style.opacity = "0";
+        //Info holder
+
+        BasicInfoHolder.style.opacity = "0";
+        //EditEmployee
+
+        EditEmployee.style.opacity = "1";
+        EditEmployee.style.height = "";
+        EditEmployee.style.width = "795px";
+        //the Whole Thing
+        WholeThing.style.backgroundColor = "";
+        //button edit
+        BasicInfo.style.backgroundColor = "";
+        BasicInfo.style.color = "";
+        //button skils
+        SkillBtn.style.backgroundColor = "";
+        SkillBtn.style.color = "";
+        //imgId
+        //jobsHolder
+        jobsHolder.style.height = "0.01px";
+        jobsHolder.style.width = "0.01";
+        jobsHolder.style.opacity = "0";
+        //jobsHolderCompleted
+        jobsHolderCompleted.style.height = "0.01px";
+        jobsHolderCompleted.style.width = "0.01px";
+        jobsHolderCompleted.style.opacity = "0";
+
+    })
+    jobs.addEventListener("click", function () {
+        int = 4;
+        Edit.style.backgroundColor = "";
+        Edit.style.color = "";
+        //Info Skills
+        SkillsHolder.style.height = "0.001px";
+        SkillsHolder.style.width = "0.001px";
+        SkillsHolder.style.opacity = "0";
+        //Info holder
+
+        BasicInfoHolder.style.opacity = "0";
+        //EditEmployee
+        EditEmployee.style.opacity = "0";
+        EditEmployee.style.height = "0.01px";
+        EditEmployee.style.width = "0.01px";
+        //the Whole Thing
+        WholeThing.style.backgroundColor = "";
+        //button edit
+        BasicInfo.style.backgroundColor = "";
+        BasicInfo.style.color = "";
+        //button skils
+        SkillBtn.style.backgroundColor = "";
+        SkillBtn.style.color = "";
+        //imgId
+        //jobsHolder
+        jobsHolder.style.height = "425px";
+        jobsHolder.style.width = "762px";
+        jobsHolder.style.opacity = "1";
+        //jobsHolderCompleted
+        jobsHolderCompleted.style.height = "0.01px";
+        jobsHolderCompleted.style.width = "0.01px";
+        jobsHolderCompleted.style.opacity = "0";
+
+
+    })
+    ToBooking.addEventListener("click", function () {
+        int = 5;
+        Edit.style.backgroundColor = "";
+        Edit.style.color = "";
+        //Info Skills
+        SkillsHolder.style.height = "0.001px";
+        SkillsHolder.style.width = "0.001px";
+        SkillsHolder.style.opacity = "0";
+        //Info holder
+
+        BasicInfoHolder.style.opacity = "0";
+        //EditEmployee
+        EditEmployee.style.opacity = "0";
+        EditEmployee.style.height = "0.01px";
+        EditEmployee.style.width = "0.01px";
+        //the Whole Thing
+        WholeThing.style.backgroundColor = "";
+        //button edit
+        BasicInfo.style.backgroundColor = "";
+        BasicInfo.style.color = "";
+        //button skils
+        SkillBtn.style.backgroundColor = "";
+        SkillBtn.style.color = "";
+        //imgId
+        //jobsHolder
+        jobsHolder.style.height = "0.01px";
+        jobsHolder.style.width = "0.01px";
+        jobsHolder.style.opacity = "0";
+        //jobsHolderCompleted
+        jobsHolderCompleted.style.height = "425px";
+        jobsHolderCompleted.style.width = "762px";
+        jobsHolderCompleted.style.opacity = "1";
+
+
+
+    })
+    imgId.addEventListener("click", function () {
+        if (int == 2) {
+            Edit.click();
+
+        }
+        else if (int == 1) {
+            Edit.click();
+
+        }
+        FileUploed.click()
+    });
+
+    FileUploed.addEventListener("change", function () {
+
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+
+                reader.addEventListener("load", function () {
+                    imgId.setAttribute("src", this.result);
+                });
+                reader.readAsDataURL(file);
+            }
+            else {
+                imgId.setAttribute("src", "/ProfileImages/DefaultImageDog.jpg")
+
+            }
+
+
+
+
+    })
+</script>

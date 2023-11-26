@@ -1,0 +1,89 @@
+﻿@model IEnumerable<DogPalour.Models.Employee>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+<style>
+    div#EmpHolder {
+        display: flex;
+        flex-direction: row;
+        overflow: hidden;
+        overflow: scroll;
+        overflow-y: hidden;
+        overflow-x: scroll;
+        overflow-x: auto;
+        background-color: black;
+        color: azure;
+        opacity: 0.8;
+        height: 510px
+    }
+
+    img#EmpHolder {
+        width: 350px;
+        height: 350px;
+    }
+
+    img#ProfileImage {
+        width: 280px;
+        position: relative;
+        left: -0.6rem;
+        top: 0.6rem
+    }
+
+    button#SubSearch {
+        background: none;
+    }
+
+    div#SearchHolder {
+    }
+</style>
+<p>
+
+    <div style="position: absolute; right: 10.5rem; top: 10.5rem; border: solid solid 2px black;">
+        @using (Html.BeginForm("SeachEmployee", "Employees", FormMethod.Post))
+        {
+            <div id="SearchHolder" style="">
+                <input title="Name/Email/Job type" type="text" placeholder="Search" name="search" style="width:250px;" /><button type="submit" id="SubSearch"><i class="fas fa-search"></i></button>
+
+            </div>
+        }
+
+    </div>
+</p>
+
+
+
+<div id="EmpHolder">
+    @if (TempData["IndexInfo2"] != null)
+    {
+        <div class="text-center text-success" style="position:absolute;background:none;display:flex;flex-direction:row">
+            <p> <h4><b> @TempData["IndexInfo1"].ToString()</b></h4></p><a href="@Url.Action("Index","Employees")" style="position:relative;top:1rem;left:3rem"
+                                                                          title="Refresh"><i class="fas fa-sync"></i></a>
+        </div>
+    }
+    <div class="row" style="position:relative;left:5rem;top:4rem;display:flex;flex-direction:row">
+
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-5" style="height:445px;width:300px;border:solid 2px azure">
+                <div>
+                    <img src="@Url.Content(item.ProfileImage)" id="ProfileImage" />
+                </div>
+                <div id="Details">
+                    <p>
+                        <h3><b>@item.FirstName @item.Surname</b></h3><br />
+
+                    </p>
+                </div>
+                <div id="Actions">
+                    
+                    <a style="width: 270px; position: relative; top: -2rem;background-color:#808080"
+                       class="btn btn-default btn-primary" href="@Url.Action("TaskAssign","Employees",new {email=item.EmailAddres })">
+                        Assign Task
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5" style="height:445px;width:40px">
+                <div style="background-color:azure;height:438px;width:3px"></div>
+            </div>
+        }
+
+    </div>
+</div>

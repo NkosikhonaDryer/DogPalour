@@ -1,0 +1,65 @@
+﻿@model IEnumerable<DogPalour.Models.Payment>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+
+<p>
+   
+</p>
+<div class="text-center">
+    <p>
+        <h3>
+            <b>
+                Payments history
+            </b>
+           
+        </h3>
+    </p>
+</div>
+<table class="table">
+    <tr>
+       
+       
+        <th>
+            Amount payed
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CardNumber)
+        </th>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.PaymentDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+      
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.AmountDue)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CardNumber)
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentDate)
+        </td>
+        <td>
+           <a class="btn btn-default btn-success" href="@Url.Action("Details","Payments",new { id = item.Id })">
+               More Payment Details
+           </a>
+            <a class="btn btn-default btn-success" href="@Url.Action("Details","Bookings",new {id = item.BookingId})">
+               Booking Details
+           </a>
+           
+        </td>
+    </tr>
+}
+
+</table>

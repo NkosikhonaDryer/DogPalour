@@ -1,0 +1,89 @@
+﻿@model DogPalour.Models.Customer
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <div class="text-center">
+        @if(TempData["AccountSuccess"] != null)
+            {
+                <p class="text-success">
+                    @TempData["AccountSuccess"].ToString()
+                </p>
+            }
+        
+    </div>
+    <p>
+        <a class="btn btn-default" href="@Url.Action("Create","Bookings",new { IdNumber = Model.IdNumber })">Create booking</a>
+    </p>
+    <hr />
+    <div class="" style="display:flex;justify-content:center">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Firstname)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Firstname)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.LastName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Gender)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Gender)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EmailAddress)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EmailAddress)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ConfirmPasswrod)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ConfirmPasswrod)
+            </dd>
+
+        </dl>
+    </div>
+   
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdNumber }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

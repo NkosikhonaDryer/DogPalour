@@ -1,0 +1,45 @@
+﻿@model DogPalour.Models.Payment
+
+@{
+    ViewBag.Title = "AdminDetails";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>AdminDetails</h2>
+
+<div>
+    <p>
+        <a class="btn btn-default btn-success" href="@Url.Action("AdminIndex","Payments")">
+            Payment history
+        </a>
+    </p>
+</div>
+<div class="text-center">
+    <p>
+        <h2><b>Payment Details</b></h2>
+    </p>
+</div>
+<div style="display:flex;justify-content:center;">
+    <div>
+        <p>
+            Customer name: @ViewBag.Name
+        </p>
+        <p>
+            Amount Due: R @Model.AmountDue
+        </p>
+        <p>
+            Amount Payed: R @Model.Amount
+        </p>
+        <p>
+            Card Number: R @Model.CardNumber
+        </p>
+       
+       
+        <p>
+            PaymentDate: @Model.PaymentDate
+        </p>
+
+    </div>
+</div>
+
+

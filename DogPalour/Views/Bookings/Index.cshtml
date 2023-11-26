@@ -1,0 +1,229 @@
+﻿@model IEnumerable<DogPalour.Models.Booking>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+@if(TempData["PaymentMsg"] != null)
+{ 
+    <div>
+        <p>
+            <h3>
+                <b>@TempData["PaymentMsg"].ToString()</b>
+            </h3>
+        </p>
+    </div>
+}
+<h2>Index</h2>
+
+<p>
+   <a href="@Url.Action("Create","Bookings",routeValues:new {IdNumber = ViewBag.EmailC})" class="btn btn-default btn-success">
+       Create booking
+   </a>
+</p>
+<div>
+    <p>
+        <h3><b>Pending booking</b></h3>
+    </p>
+</div>
+<table class="table" style="background-color:#808080;color:azure">
+    <tr>
+        <th>
+            Date and time
+        </th>
+        <th>
+            Status
+        </th>
+        <th>
+          Amount due
+        </th>
+        <th>
+            
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.BookingDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.state)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookingAmount)
+        </td>
+       
+        <td>
+            <a class="btn btn-default btn-success" href="@Url.Action("Edit","Bookings", new { id=item.BookingId })">
+                Update booking
+            </a>
+            <a class="btn btn-default btn-success" href="@Url.Action("Details","Bookings",new { id=item.BookingId })">
+                Details
+            </a>
+           
+                <button data-toggle="modal" data-target=".@item.BookingId" style="" class="btn btn-default btn-danger" type="submit">
+                    Cancel booking
+                </button>
+            
+            <div class="modal fade @item.BookingId" style="color:black">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="width:58%;">
+                        <div class="modal-header">
+                            <button data-dismiss="modal" class="close"><span>&times;</span></button>
+                            <div class="modal-title"><b>Cancel booking</b></div>
+                        </div>
+                        @using (Html.BeginForm("CancelBooking", "Bookings", FormMethod.Post))
+                        {
+                            <div class="modal-body">
+                                <p>
+                                    Are you sure you want to cancel this booking?
+                                </p>
+                                <input type="hidden" name="id" value="@item.BookingId"/>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-default btn-danger" type="submit">
+                                    Yes
+                                </button>
+                                <button data-dismiss="modal" class="btn btn-default btn-success" type="submit">
+                                    No
+                                </button>
+                            </div>
+                        }
+                        </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+}
+
+</table>
+
+<div>
+    <p>
+        <h3><b>Approved bookings</b></h3>
+    </p>
+</div>
+<table class="table" style="background-color:#808080;color:azure">
+    <tr>
+        <th>
+            Date and time
+        </th>
+        <th>
+            Status
+        </th>
+        <th>
+            Amount due
+        </th>
+        <th>
+
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in ViewBag.Acceped)
+    {
+        <tr>
+
+            <td>
+                @item.BookingDate
+            </td>
+            <td>
+                @item.state
+            </td>
+            <td>
+                @item.BookingAmount
+            </td>
+
+            <td>
+               
+                    <a class="btn btn-default btn-success" href="@Url.Action("Create","Payments", new { id=item.BookingId })">
+                        Make payment
+                    </a>
+                
+
+                <a class="btn btn-default btn-success" href="@Url.Action("Details","Bookings",new { id=item.BookingId })">
+                    Details
+                </a>
+
+                <button data-toggle="modal" data-target=".@item.BookingId" style="" class="btn btn-default btn-danger" type="submit">
+                    Cancel booking
+                </button>
+
+                <div class="modal fade @item.BookingId" style="color:black">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="width:58%;">
+                            <div class="modal-header">
+                                <button data-dismiss="modal" class="close"><span>&times;</span></button>
+                                <div class="modal-title"><b>Cancel booking</b></div>
+                            </div>
+                            @using (Html.BeginForm("CancelBooking", "Bookings", FormMethod.Post))
+                            {
+                                <div class="modal-body">
+                                    <p>
+                                        Are you sure you want to cancel this booking?
+                                    </p>
+                                    <input type="hidden" name="id" value="@item.BookingId" />
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-default btn-danger" type="submit">
+                                        Yes
+                                    </button>
+                                    <button data-dismiss="modal" class="btn btn-default btn-success" type="submit">
+                                        No
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div>
+    <p>
+        <h3><b>History bookings</b></h3>
+    </p>
+</div>
+<table class="table" style="background-color:#808080;color:azure">
+    <tr>
+        <th>
+            Date and time
+        </th>
+        <th>
+            Status
+        </th>
+        <th>
+            Amount due
+        </th>
+        <th>
+
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in ViewBag.History)
+    {
+        <tr>
+
+            <td>
+                @item.BookingDate
+            </td>
+            <td>
+                @item.state
+            </td>
+            <td>
+                @item.BookingAmount
+            </td>
+
+            
+        </tr>
+    }
+
+</table>

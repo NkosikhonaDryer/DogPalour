@@ -1,0 +1,141 @@
+﻿
+@{
+
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<br />
+<br />
+
+<div class="row">
+    <div class="col-lg-4"></div>
+
+    <div class="jumbotron" style="background-color: rgb(84, 159, 126, 0.5 )">
+
+        <h1>Dog Palour</h1>
+        <p class="lead">Spoil your Dog with luxuries today.</p>
+        <p><a href="@Url.Action("Create", "Bookings")" class="btn btn-primary btn-lg">Book Now &raquo;</a></p>
+
+        <br />
+        <br />
+
+        <div class="row">
+            @foreach (var item in ViewBag.Services)
+            {
+                <div class="item col-md-4">
+                    <div class="col-sm-4  text-center ">
+                        <div class="service-media"> <img class="roundrect" src="@Url.Content(item.picPath)" alt=" Avatar" width="300" height="200"> </div>
+                        <div class="service-desc">
+                            <h3 style="color:black CaptionText">@item.ServiceType</h3>
+
+                        </div>
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .roundrect {
+        border-radius: 12px;
+    }
+
+
+
+    .item img {
+        -moz-transition: all 0.3s;
+        -webkit-transition: all 0.3s;
+        transition: all 0.3s;
+    }
+
+    .item:hover img {
+        -moz-transform: scale(1.1);
+        -webkit-transform: scale(1.1);
+        transform: scale(1.5);
+    }
+</style>
+
+
+
+<section class="footer-section bg-black pt-5">
+    <div class="col-md-3">
+        <br />
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="d-lg-table-row">
+                            <div class="bg-circle-outline d-inline-block" style="background-color:#3b5998">
+                                <a href="https://www.facebook.com/">
+                                    <i class="fa fa-2x fa-fw fa-facebook-square text-white"></i>
+                                </a>
+                            </div>
+                            <div class="bg-circle-outline d-inline-block" style="background-color:#4099FF">
+                                <a href="https://twitter.com/">
+                                    <i class="fa fa-2x fa-fw fa-twitter-square text-white"></i>
+                                </a>
+                            </div>
+                            <div class="bg-circle-outline d-inline-block" style="background-color:#0077B5">
+                                <a href="https://www.linkedin.com/company/">
+                                    <i class="fa fa-2x fa-fw fa-instagram text-white"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+</section>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="js/popper.min.js"></script>
+<script src="https://mdbootstrap.com/previews/docs/latest/js/bootstrap.min.js"></script>
+<script src="https://mdbootstrap.com/previews/docs/latest/js/mdb.min.js"></script>
+<script src="https://mdbootstrap.com/previews/docs/latest/js/jarallax.js"></script>
+<script src="https://mdbootstrap.com/previews/docs/latest/js/jarallax-video.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+
+
+@*<div class="row">
+            <div class="service-media"> <button onclick="prev()">Prev</button> <img id="slider" src="~/Images/Screenshot (35).png" alt=" Avatar" width="200" height="100"><button onclick="next()">Next</button> </div>
+            <div class="service-desc">
+                <h3 class="col-sm-4  text-capitalize" style="color:white">Salon</h3>
+            </div>
+        </div>
+
+        <script>
+        var images = [
+
+        ];
+        var num = 0;
+        function next() {
+            var slider = document.getElementById('slider');
+            num++;
+            if (num >= images.length) {
+                num = 0;
+            }
+            slider.src = images[num];
+        }
+        function prev() {
+            var slider = document.getElementById('slider');
+            num--;
+            if (num < 0) {
+                num = images.length - 1;
+            }
+            slider.src = images[num];
+        }
+    </script>*@

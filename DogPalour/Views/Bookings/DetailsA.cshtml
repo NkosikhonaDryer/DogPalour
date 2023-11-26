@@ -1,0 +1,115 @@
+﻿@model DogPalour.Models.Booking
+@{
+    ViewBag.Title = "DetailsA";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div>
+    <p>
+        <br/>
+
+
+    </p>
+</div>
+<div class="text-center">
+    <p>
+        <h1>
+            Booking details
+        </h1>
+    </p>
+</div>
+<div >
+    <div>
+    <div style="position:relative;left:37rem">
+
+      
+        <dl class="dl-horizontal">
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.BookingDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BookingDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.state)
+            </dt>
+
+            <dd>
+                 @Html.DisplayFor(model => model.state)
+            </dd>
+
+
+
+
+        </dl>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-lg-6" style="position:relative;left:30rem;overflow:hidden;width:600px;height:350px;border:solid 2px black;
+overflow:scroll;overflow-x:hidden;overflow-y:scroll;overflow-y:auto">
+            <div class="text-center">
+                <p>
+                    <h1 style="position:relative;left:-1.5rem"><b>Dogs list</b></h1>
+                </p>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Age
+                        </th>
+                        <th>
+                            Size
+                        </th>
+                        <th>
+                            Type
+                        </th>
+                        <th>
+
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                </thead>
+                @foreach (var item in ViewBag.Dogs)
+                {
+                    <tr>
+                        <td>
+                            @item.Name
+                        </td>
+                        <td>
+                            @item.Age
+                        </td>
+                        <td>
+                            @item.Size
+                        </td>
+                        <td>
+                            @item.DogType
+                        </td>
+                        <td>
+                            <p>
+                                <a style="position:relative;width:250px;left:5rem" class="btn btn-success btn-default" href="@Url.Action("ADetails","Dog1",new { Did = item.id })">Services & Details</a>
+
+
+                            </p>
+
+                        </td>
+
+                    </tr>
+                }
+            </table>
+        </div>
+
+    </div>
+</div>
+</div>
+

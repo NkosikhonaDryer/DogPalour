@@ -1,0 +1,98 @@
+﻿@model DogPalour.Models.Service
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<link href="~/Content/StyleSheet2.css" rel="stylesheet" />
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit", "Services", FormMethod.Post, new { Enctype = "multipart/form-data" }))
+{
+  //  ViewBag.PicLink
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="PicLink" value="@Model.picPath"/>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-horizontal">
+                <h4>Add Service information below</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ServiceType, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ServiceType, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ServiceType, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save Changes" class="btn btn-default btn-success" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <input type="file" name="AlbumCover" value="" id="AlbumCoverReal" hidden="hidden" style="width:0.01px; height:0.01px; opacity:0;" />
+            <div>
+                <p style="align-self:center;">
+                    <h4 style="color:black"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Click below to add service cover image</b></h4>
+                </p>
+            </div>
+            <div style="height:450px; width:450px; color:azure" id="Over_Lay">
+
+
+
+                <img id="imgId" class=" Theimg" src="@Url.Content(Model.picPath)"
+                     style="height:450px;width:450px; border-radius: 40px;overflow:hidden;position:absolute;left:1.5rem"
+                     title="Add new album cover" />
+
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        const FileUploed = document.getElementById("AlbumCoverReal");
+        const Button = document.getElementById("CustomFile");
+        const imgId = document.getElementById("imgId")
+        imgId.addEventListener("click", function () {
+
+            FileUploed.click()
+        });
+        FileUploed.addEventListener("change", function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+
+                reader.addEventListener("load", function () {
+                    imgId.setAttribute("src", this.result);
+                });
+                reader.readAsDataURL(file);
+            }
+            else {
+                imgId.setAttribute("src", "@Url.Content(Model.picPath)")
+
+            }
+
+        })
+    </script>
+}
+
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

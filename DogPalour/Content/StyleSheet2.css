@@ -1,0 +1,117 @@
+﻿
+
+.image__Text {
+    border-radius: 5.5rem;
+    padding: 1rem 3rem;
+}
+
+#Over_Lay {
+   
+    align-content: center;
+    background: rgb(104, 28, 35);
+    height: 220px;
+    width: 200px;
+    border-radius: 40px;
+    overflow: hidden
+}
+div#Over_Lay2 {
+    align-content: center;
+    background: rgb(104, 28, 35);
+    height: 220px;
+    width: 200px;
+    border-radius: 40px;
+    overflow: hidden
+}
+.image__Text{
+    position:absolute;
+    align-self:center;
+    top:8rem;
+    left:2rem;
+    right:3rem;
+    border:none;
+    font-size:2rem;
+    opacity:0;
+}
+img.Theimg {
+    
+   
+    display: block;
+}
+    img.Theimg:hover {
+        opacity: 0.3;
+        cursor: pointer;
+    }
+div#Over_Lay:hover{
+    background:rgb(131, 7, 7);
+}
+div.CustomFile2:hover {
+    opacity: 0.3;
+    cursor: pointer;
+    background-color: rgb(131, 7, 7)
+}
+label.CustomFileL:hover {
+    cursor: pointer;
+}
+div.player {
+    position: relative;
+    
+    height: 60px;
+    background-color: rgba(0,0,0,0.2);
+    display: flex;
+    border-radius: 2px;
+    padding-left: 5px;
+    padding-right: 16px;
+}
+div.info {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    width: 50%;
+    padding: 0 16px;
+}
+div.name {
+    font-size: 15px;
+    font-weight: 700;
+}
+div.btns {
+    width: 60rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+
+}
+.progress {
+    position: absolute;
+    height: 2px;
+    left: 0;
+    top: 0;
+    background-color: #00a8ff;
+}
+img.img-thumbnail {
+    margin-top: 5px;
+    width: 60px;
+    height: 50px;
+}
+img#image {
+    border-radius: 15px;
+    box-shadow: 1px 0px 20px 12px rgba(240,240,240,0.2);
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 50%;
+    outline: none;
+    margin: 0;
+    background-color: #808080;
+    height: 5px;
+}
+
+    input[type="range"]::-webkit-slider-thumb {
+        height: 20px;
+    }
+div#SongHolder{
+    border:30px;
+    border-color:#808080;
+    background:none;
+}

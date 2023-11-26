@@ -1,0 +1,58 @@
+﻿@model DogPalour.Models.Payment
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+@if(TempData["PaymentSuccess"] != null)
+{
+    <div class="text-center text-success">
+        <p><h3><b>@TempData["PaymentSuccess"].ToString()</b></h3></p>
+    </div>
+}
+<div>
+    <p>
+        <br/>
+    </p>
+</div>
+<div>
+    <p>
+        <a class="btn btn-default btn-success" href="@Url.Action("Index","Payments")">
+            Payment history
+        </a>
+    </p>
+</div>
+<div class="text-center">
+    <p>
+        <h2><b>Payment Details</b></h2>
+    </p>
+</div>
+<div style="display:flex;justify-content:center;">
+    <div>
+        <p>
+            Customer name: @ViewBag.Name
+        </p>
+        <p>
+            Amount Due: R @Model.AmountDue
+        </p>
+        <p>
+            Amount Payed: R @Model.Amount
+        </p>
+        <p>
+            Card Number: R @Model.CardNumber
+        </p>
+        <p>
+            CVV: @Model.CVV
+        </p>
+        <p>
+            Exp: @Model.Exp
+        </p>
+        <p>
+            PaymentDate: @Model.PaymentDate
+        </p>
+
+    </div>
+</div>
+
+

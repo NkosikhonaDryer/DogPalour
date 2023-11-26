@@ -1,0 +1,156 @@
+﻿@model IEnumerable<DogPalour.Models.Booking>
+
+@{
+    ViewBag.Title = "AllBookings";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>All valid Bookings</h2>
+<hr/>
+<div>
+    <p>
+        <h3><b>Pending booking</b></h3>
+    </p>
+</div>
+<table class="table" style="background-color:#808080;color:azure">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.BookingDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookingAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubTotal)
+        </th>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.state)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.BookingDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookingAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubTotal)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.state)
+            </td>
+            <td>
+                <a class="btn btn-default btn-success" href="@Url.Action("AdminAccept","Bookings",new {id =item.BookingId})">
+                    Confirm booking
+                </a>
+
+
+                <button class="btn btn-default btn-danger" data-toggle="modal" data-target=".@item.BookingId">
+                    Decline booking
+                </button>
+               
+                <div class="modal fade @item.BookingId">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="width:58%;color:black">
+                            <div class="modal-header">
+                                <button data-dismiss="modal" class="close"><span>&times;</span></button>
+                                <div class="modal-title"><b>Are you sure you want to decline this booking?</b></div>
+                            </div>
+                            @using (Html.BeginForm("DeclineBooking", "Bookings", FormMethod.Post))
+                            {
+                                <div class="modal-body">
+
+                                    <div>
+                                        <label>Reason for decilning booking</label>
+                                        <input type="hidden" name="BookingId" value="@item.BookingId" />
+                                    </div>
+                                    <input style="height:100px;width:400px;position:relative;left:2rem" type="text" name="Reason" />
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-danger btn-danger">
+                                        Decline
+                                    </button>
+                                    <button  data-dismiss="modal" class="btn btn-default btn-success">
+                                       Cancel
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+       
+    }
+
+
+
+
+</table>
+
+<div>
+    <div>
+
+        Approved booking
+    </div>
+    <table class="table" style="background-color:#b200ff;color:azure">
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.BookingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubTotal)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.state)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in ViewBag.Accepted)
+        {
+            <tr>
+
+                <td>
+                    @item.BookingDate
+                </td>
+                <td>
+                    @item.BookingAmount
+                </td>
+                <td>
+                    @item.SubTotal
+                </td>
+                
+                <td>
+                    @item.state
+                </td>
+                <td>
+
+                    <a class="btn btn-default btn-primary" href="@Url.Action("DetailsA","Bookings",new { id = item.BookingId})">More Details</a>
+
+                </td>
+            </tr>
+
+        }
+
+
+
+
+    </table>
+</div>

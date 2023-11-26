@@ -1,0 +1,60 @@
+﻿@model IEnumerable<DogPalour.Models.Payment>
+
+@{
+    ViewBag.Title = "AdminIndex";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="text-center">
+    <p>
+        <h3>
+            <b>
+                All payments history
+            </b>
+        </h3>
+        
+    </p>
+</div>
+
+<table class="table">
+    <tr>
+        
+        <th>
+          Amount Due
+        </th>
+       
+        
+        <th>
+         Payment Date
+        </th>
+        <th>
+           Amount payed
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+      
+        <td>
+            R @Html.DisplayFor(modelItem => item.AmountDue)
+        </td>
+       
+       
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentDate)
+        </td>
+        <td>
+           R  @Html.DisplayFor(modelItem => item.Amount)
+        </td>
+        <td>
+            <a class="btn btn-success btn-default" href="@Url.Action("AdminDetails", "Payments", new { id = item.Id})">
+               Payment Details
+            </a>
+            
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,129 @@
+﻿@model DogPalour.Models.Dog1
+
+@{
+    ViewBag.Title = "ADetails";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<style>
+    div#EmpHolder {
+        display: flex;
+        flex-direction: row;
+        overflow: hidden;
+        overflow: scroll;
+        overflow-y: hidden;
+        overflow-x: scroll;
+        overflow-x: auto;
+        background-color: black;
+        color: azure;
+        opacity: 0.8;
+        height: 510px;
+        width:1000px
+    }
+    img#EmpHolder {
+        width: 350px;
+        height: 350px;
+    }
+    img#ProfileImage {
+        height:230px;
+        width: 280px;
+        position: relative;
+        left: -0.6rem;
+        top: 0.6rem
+    }
+</style>
+@if (TempData["AssignInfo"] != null)
+{
+    <div class="text-center text-success">
+        <p><h3><b>@TempData["AssignInfo"].ToString()</b></h3></p>
+    </div>
+}
+<div>
+    <p>
+        <br/>
+        <br/>
+    </p>
+    <div>
+        <p>
+            <h1>
+                <b>
+                    @Model.Name's basic details
+                </b>
+            </h1>
+        </p>
+    </div>
+</div>
+<div  style="display:flex;flex-direction:column">
+    <div id="InfoHolder" class="col-sm-8 col-md-9 bg-light p-2" style="opacity:1;overflow:hidden;position:relative;left:-1.5rem">
+        <table class="table table-hover table-striped table-bordered" style="">
+            <tr><th>Dog Name:</th><td>@Html.DisplayFor(model => model.Name)</td></tr>
+            <tr><th>Size:</th><td>@Html.DisplayFor(model => model.Age)</td></tr>
+            <tr><th>Dog Type:</th><td>@Html.DisplayFor(model => model.DogType)</td></tr>
+
+        </table>
+    </div>
+    <br />
+    <div >
+        <h2><b>Services selected for @Model.Name</b></h2>
+
+    </div>
+
+    <div id="EmpHolder">
+
+        <!--List of the service booked for the the dog-->
+        <div class="row" style="display: flex; flex-direction: row;position:relative;top:4rem;left:5rem">
+            @foreach (var item in ViewBag.DogServices)
+            {
+                <!--
+                 servicerId = d.ServiceID,
+                         DogServicerId = d.id,
+                          = a.picPath,
+                         DogId = d.DogId,
+                         AssgnState = d.AssgnState,
+                         EmailAddres = d.EmailAddres
+            -->
+                <div class="col-lg-5" style="height:445px;width:300px;border:solid 2px azure">
+
+                    <img src="@Url.Content(item.picPath)" id="ProfileImage" />
+
+
+                    <div id="Actions">
+                        @if (item.AssgnState != "Assigned")
+                        {
+                            <a style="width: 270px; position: relative; top: 2rem;background-color:#808080"
+                               class="btn btn-default btn-primary" href="@Url.Action("TaskAssign","Employees",new {Servtype=item.ServiceType,DogSerId = item.DogServicerId,DogId = Model.id})">
+                                Assign Task
+                            </a>
+                        }
+
+                    </div>
+                    <div id="Details">
+                        <p>
+                            <h3><b>@item.ServiceType</b></h3><br />
+                            @if (item.AssgnState != "Assigned")
+                            {
+
+                            }
+                            @if (item.AssgnState == "Assigned")
+                            {
+                                <label>
+                                    @item.AssgnState To <a href="@Url.Action("Details","Employees",new {email=item.EmailAddres })">@item.EmapName @item.SurnameName</a>
+                                </label>
+                            }
+
+
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-5" style="height:445px;width:40px">
+                    <div style="background-color:azure;height:438px;width:3px"></div>
+                </div>
+
+            }
+
+        </div>
+        
+    </div>
+</div>
+

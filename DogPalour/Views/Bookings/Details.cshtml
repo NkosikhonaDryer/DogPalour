@@ -1,0 +1,200 @@
+﻿@model DogPalour.Models.Booking
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+
+<div>
+    <h4>Booking potential amount R @Model.SubTotal</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BookingDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BookingDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BookingAmount)
+        </dt>
+
+        <dd>
+            R @Html.DisplayFor(model => model.BookingAmount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.state)
+        </dt>
+
+        <dd>
+            R @Html.DisplayFor(model => model.state)
+        </dd>
+
+        
+        
+
+    </dl>
+</div>
+<hr/>
+<div style="display:flex;align-content:center;justify-content:center">
+    <p>
+        @if(Model.state == "Invalid" || Model.SubTotal > Model.BookingAmount)
+         {
+        <div>
+            <div style="position:relative;right:7rem">
+                <p>
+                    <b>
+                        Booking is not valid until submitted below
+                    </b>
+                </p>
+            </div>
+            @using (Html.BeginForm("FinishBooking", "Bookings", FormMethod.Post))
+            {@Html.AntiForgeryToken()
+            <input type="hidden" name="Id" value="@Model.BookingId" />
+            <button type="submit" class="btn btn-default btn-success">
+                Submit booking
+            </button>
+        }
+        </div>
+         }
+    </p>
+</div>
+<div>
+    
+    <hr/>
+    <div class="row">
+        <div class="col-lg-6">
+            <div>
+                <p>
+                    <h3>Dog list</h3>
+                </p>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                             Age
+                        </th>
+                        <th>
+                            Size
+                        </th>
+                        <th>
+                            Type
+                        </th>
+                        <th>
+                           
+                        </th>
+                        <th>
+                           
+                        </th>
+                    </tr>
+                </thead>
+                @foreach(var item in ViewBag.Dogs)
+            {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Age
+                </td>
+                <td>
+                    @item.Size
+                </td>
+                <td>
+                    @item.DogType
+                </td>
+                <td>
+                    <p>
+                        <a class="btn btn-success btn-default" href="@Url.Action("Details","Dog1",new { id = item.id })">Add service</a>
+                        
+
+                    </p>
+                   
+                </td>
+                <td>
+                    @using (Html.BeginForm("Delete", "Dog1", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@item.id" />
+                        <div class="form-actions no-color">
+                            <input type="submit" value="Delete" class="btn btn-success btn-default" />
+
+                        </div>
+                    }
+                </td>
+            </tr>
+            }
+            </table>
+        </div>
+        <div class="col-lg-6">
+            <div><p>
+                <h3>Add dog</h3>
+                </p></div>
+            <hr/>
+
+            @using (Html.BeginForm("Create","Dog1",FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+
+                    <div class="col-md-10" style="position:relative;left:2rem">
+                        <label class="control-label col-md-2">Name</label>
+                        <input class="form-control" type="text" name="Name" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Dog Type</label>
+                   
+                    <div class="col-md-10">
+                        <input class="form-control" type="text" name="DogType" />
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Age</label>
+
+                    <div class="col-md-10">
+                        <input class="form-control" type="text" name="Age" />
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Size</label>
+                    <div class="col-md-10">
+                       
+                        <select required class="form-control" name="Size">
+                            <option>Small</option>
+                            <option>Medium</option>
+                            <option>Large</option>
+                        </select>
+                    </div>
+                </div>
+                <input type="hidden" name="BookingID" value="@Model.BookingId"/>
+                
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Add dog" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</div>

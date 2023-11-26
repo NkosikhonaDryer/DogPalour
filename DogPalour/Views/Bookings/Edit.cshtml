@@ -1,0 +1,74 @@
+﻿@model DogPalour.Models.Booking
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<div>
+    <h4>Booking</h4>
+    <hr />
+    <div class="form-horizontal" style="position:relative;left:30rem">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.BookingId)
+       
+        <div class="form-group">
+            @Html.LabelFor(model => model.BookingDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BookingDate, new { htmlAttributes = new { @class = "form-control",@disabled ="disabled" } })
+                @Html.ValidationMessageFor(model => model.BookingDate, "", new { @class = "text-danger" })
+
+                <input type="hidden" name="BookingDate" value="@Model.BookingDate"/>
+                <input type="hidden" name="SubTotal" value="@Model.SubTotal"/>
+                <input type="hidden" name="EmailAddress "value="@Model.EmailAddress"/>
+                <input type="hidden" name="Firstname" value="@Model.Firstname"/>
+                <input type="hidden" name="LastName" value="@Model.Firstname"/>
+                <input type="hidden" name="PhoneNumber" value="@Model.PhoneNumber"/>
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BookingAmount, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BookingAmount, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.BookingAmount, "", new { @class = "text-danger" })
+
+                <input type="hidden" name="BookingAmount" value="@Model.BookingAmount"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustomerIdnumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CustomerIdnumber, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.CustomerIdnumber, "", new { @class = "text-danger" })
+
+                <input type="hidden" name="CustomerIdnumber" value="@Model.CustomerIdnumber"/>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Accept booking" class="btn btn-default btn-success" />
+                <a style="position:relative;left:8rem" class="btn btn-default btn-danger" href="@Url.Action("AllBookings","Bookings")">
+                    Cancel
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+   
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
